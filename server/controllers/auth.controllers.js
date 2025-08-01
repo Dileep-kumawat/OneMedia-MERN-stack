@@ -24,6 +24,12 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ fullname, email, username, password: hashedPassword });
     await user.save();
+    const token = jwt.sign(
+      { id: user._id, username: user.username, fullname: user.fullname, email: user.email },
+      JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+    res.cookie('token', token, { httpOnly: true, sameSite: 'lax', maxAge: 86400000 });
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });

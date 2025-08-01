@@ -11,7 +11,11 @@ import DefaultProfile from '../assets/DefaultProfile.png';
 import { Link } from 'react-router';
 import { useAuth } from '../context/Auth.context';
 
+import { useNavigate } from 'react-router-dom';
+
 const Sidebar = () => {
+
+    const navigate = useNavigate();
 
     const { logout } = useAuth();
     return (
