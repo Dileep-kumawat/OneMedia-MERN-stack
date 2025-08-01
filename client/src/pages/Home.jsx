@@ -1,28 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import axios from 'axios';
-import { useAuth } from '../context/Auth.context';
+import Sidebar from '../utils/Sidebar';
 
-
-
-
-import VideoUploader from './VideoUploader';
-
-
-
-
-import { IoMdHome } from "react-icons/io";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import { FaRegCompass } from "react-icons/fa";
-import { TfiVideoClapper } from "react-icons/tfi";
-import { TiMessages } from "react-icons/ti";
 import { FaRegHeart } from "react-icons/fa";
-import { FaRegPlusSquare } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
-import { IoIosSend } from "react-icons/io";
-import { FaRegBookmark } from "react-icons/fa6";
 import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { HiOutlineSpeakerXMark } from "react-icons/hi2";
 
@@ -44,82 +27,91 @@ import Profile6 from '../assets/Profile6.jpeg'
 import Profile7 from '../assets/Profile7.jpeg'
 import Profile8 from '../assets/Profile8.jpeg'
 
+const FakeData = [
+  {
+    "username": "traveljunkie",
+    "duration": "2h",
+    "description": "Sunset over the Grand Canyon 🌄 #nature #wanderlust",
+    "likes": 230,
+    "comments": 14
+  },
+  {
+    "username": "tech_guru",
+    "duration": "1d",
+    "description": "Unboxing the latest VR headset! Review coming soon 🎮🕶️",
+    "likes": 870,
+    "comments": 122
+  },
+  {
+    "username": "fitnessqueen",
+    "duration": "3d",
+    "description": "Post-leg day feels 😩🔥 #fitnessmotivation",
+    "likes": 640,
+    "comments": 57
+  },
+  {
+    "username": "chef_bobby",
+    "duration": "1w",
+    "description": "Tried making sushi at home... turned out better than expected 🍣",
+    "likes": 413,
+    "comments": 31
+  },
+  {
+    "username": "minimal_moods",
+    "duration": "5h",
+    "description": "Clean lines and neutral tones. Love this aesthetic 🖤🤍 #minimalism",
+    "likes": 198,
+    "comments": 11
+  },
+  {
+    "username": "booknerd42",
+    "duration": "2d",
+    "description": "Finished 'The Midnight Library' and my heart is full 📚✨ #bookrecommendation",
+    "likes": 325,
+    "comments": 25
+  },
+  {
+    "username": "urbanrider",
+    "duration": "6h",
+    "description": "Morning ride through downtown—city vibes + fresh air 🚴‍♂️🌆",
+    "likes": 276,
+    "comments": 19
+  },
+  {
+    "username": "plantmomma",
+    "duration": "4d",
+    "description": "My monstera finally split a new leaf! 🌱🪴 #plantparent",
+    "likes": 489,
+    "comments": 44
+  }
+];
+const DemoAssets = [Demo1, Demo2, Demo3, Demo4, Demo5, Demo6, Demo7, Demo8];
+const ProfileAssets = [Profile1, Profile2, Profile3, Profile4, Profile5, Profile6, Profile7, Profile8];
+const footerTags = [
+  "About",
+  "Help",
+  "Press",
+  "API",
+  "Jobs",
+  "Privacy",
+  "Terms",
+  "Locations",
+  "Language",
+  "Meta Verified"
+]
+
+
 const Home = () => {
-  const FakeData = [
-    {
-      "username": "traveljunkie",
-      "duration": "2h",
-      "description": "Sunset over the Grand Canyon 🌄 #nature #wanderlust",
-      "likes": 230,
-      "comments": 14
-    },
-    {
-      "username": "tech_guru",
-      "duration": "1d",
-      "description": "Unboxing the latest VR headset! Review coming soon 🎮🕶️",
-      "likes": 870,
-      "comments": 122
-    },
-    {
-      "username": "fitnessqueen",
-      "duration": "3d",
-      "description": "Post-leg day feels 😩🔥 #fitnessmotivation",
-      "likes": 640,
-      "comments": 57
-    },
-    {
-      "username": "chef_bobby",
-      "duration": "1w",
-      "description": "Tried making sushi at home... turned out better than expected 🍣",
-      "likes": 413,
-      "comments": 31
-    },
-    {
-      "username": "minimal_moods",
-      "duration": "5h",
-      "description": "Clean lines and neutral tones. Love this aesthetic 🖤🤍 #minimalism",
-      "likes": 198,
-      "comments": 11
-    },
-    {
-      "username": "booknerd42",
-      "duration": "2d",
-      "description": "Finished 'The Midnight Library' and my heart is full 📚✨ #bookrecommendation",
-      "likes": 325,
-      "comments": 25
-    },
-    {
-      "username": "urbanrider",
-      "duration": "6h",
-      "description": "Morning ride through downtown—city vibes + fresh air 🚴‍♂️🌆",
-      "likes": 276,
-      "comments": 19
-    },
-    {
-      "username": "plantmomma",
-      "duration": "4d",
-      "description": "My monstera finally split a new leaf! 🌱🪴 #plantparent",
-      "likes": 489,
-      "comments": 44
-    }
-  ];
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const { logout } = useAuth();
 
   const [mutedStates, setMutedStates] = useState(
     new Array(FakeData.length).fill(true)
   );
 
   const videoRefs = useRef([]);
-
-  const addToRefs = (el) => {
-    if (el && !videoRefs.current.includes(el)) {
-      videoRefs.current.push(el);
-    }
-  };
 
   useEffect(() => {
     axios.get('http://localhost:3000/api/auth/profile', { withCredentials: true })
@@ -129,48 +121,9 @@ const Home = () => {
       })
       .catch(() => {
         setLoading(false);
-        navigate('/login'); // Redirect if not authenticated
+        navigate('/login');
       });
   }, [navigate]);
-
-  useEffect(() => {
-    if (videoRefs.current.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        setMutedStates((prevMutedStates) => {
-          const updatedMutedStates = [...prevMutedStates];
-          entries.forEach((entry) => {
-            const index = videoRefs.current.indexOf(entry.target);
-            const video = entry.target;
-            if (index !== -1 && video) {
-              if (entry.isIntersecting) {
-                video.play();
-                updatedMutedStates[index] = false;
-              } else {
-                video.pause();
-                updatedMutedStates[index] = true;
-              }
-            }
-          });
-          return updatedMutedStates;
-        });
-      },
-      {
-        threshold: 0.5,
-      }
-    );
-
-    videoRefs.current.forEach((video) => {
-      if (video) observer.observe(video);
-    });
-
-    return () => {
-      videoRefs.current.forEach((video) => {
-        if (video) observer.unobserve(video);
-      });
-    };
-  }, [FakeData.length]);
 
   if (loading) {
     return (
@@ -180,8 +133,6 @@ const Home = () => {
     );
   }
 
-  const DemoAssets = [Demo1, Demo2, Demo3, Demo4, Demo5, Demo6, Demo7, Demo8];
-  const ProfileAssets = [Profile1, Profile2, Profile3, Profile4, Profile5, Profile6, Profile7, Profile8];
   videoRefs.current = [];
   const reelSection = FakeData.map((val, valIndex) => {
     const media = DemoAssets[valIndex];
@@ -250,18 +201,6 @@ const Home = () => {
 
   })
 
-  const footerTags = [
-    "About",
-    "Help",
-    "Press",
-    "API",
-    "Jobs",
-    "Privacy",
-    "Terms",
-    "Locations",
-    "Language",
-    "Meta Verified"
-  ]
   const Footer = footerTags.map((val, valIndex) => {
     return (
       <li key={valIndex} className='text-gray-500 text-sm cursor-pointer hover:underline hover:text-black dark:hover:text-white'>
@@ -273,55 +212,15 @@ const Home = () => {
   return (
     <>
       <div className='w-full h-screen overflow-hidden dark:bg-slate-950 dark:text-white flex '>
-        <div className="sidebar h-screen py-5 overflow-auto pl-5 pr-3 sm:pr-10 flex flex-col justify-between gap-10 border-r border-r-black/50 dark:border-r-gray-500">
-          <div>
-            <h1 className='text-3xl font-bold mb-10 logoFont sm:pl-3'><span className='hidden sm:block'>One_Media</span><span className='block sm:hidden'>O</span></h1>
-            <ul className='flex flex-col gap-3'>
-              <Link to='/' className='sidenavLinks'>
-                <IoMdHome className='text-3xl' />
-                <li>Home</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <FaMagnifyingGlass className='text-2xl' />
-                <li>Search</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <FaRegCompass className='text-2xl' />
-                <li>Explore</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <TfiVideoClapper className='text-xl' />
-                <li>Reels</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <TiMessages className='text-2xl' />
-                <li>Messages</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <FaRegHeart className='text-2xl ' />
-                <li>Notifications</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <FaRegPlusSquare className='text-2xl' />
-                <li>create</li>
-              </Link>
-              <Link to='' className='sidenavLinks'>
-                <img src={DefaultProfile} className='w-8 rounded-full ' alt="" />
-                <li>Profile</li>
-              </Link>
-            </ul>
-          </div>
-          <button onClick={() => {
-            logout();
-            navigate('/login');
-          }} className='bg-red-600 hidden sm:block text-white font-bold py-2 px-5 rounded-2xl hover:bg-red-500 cursor-pointer text-md active:scale-[0.95]'>Log out</button>
-        </div>
+        
+        <Sidebar /> 
+
         <main className='grid md:grid-cols-3 grid-cols-2 w-full'>
+
           <div className='col-span-2 w-full sm:p-15 p-5 space-y-15 overflow-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
-            <h4 className='w-full text-center text-2xl'>Suggested Posts : </h4>
             {reelSection}
-            {/* <VideoUploader /> */}
           </div>
+
           <div className='w-full hidden md:block p-10 space-y-10'>
             <div className="card flex gap-5 items-center lg:min-w-1/2 min:w-full">
               <img src={DefaultProfile} alt="" className='rounded-full size-11' />
@@ -347,12 +246,13 @@ const Home = () => {
                 <a href="https://github.com/Dileep-kumawat" target='_blank' className='text-blue-400 cursor-pointer hover:underline'> Back-end</a>
               </div>
               <div>
-                The Linkedin Profile : 
+                The Linkedin Profile :
                 <a href="https://www.linkedin.com/in/dileep-kumawat/" target='_blank' className='text-blue-400 cursor-pointer hover:underline'> LinkedIn</a>
               </div>
             </div>
             <div className='text-gray-500 text-sm'>© 2025 One_Media from Dileep</div>
           </div>
+
         </main>
       </div>
     </>
