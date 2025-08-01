@@ -26,7 +26,7 @@ const Signup = () => {
     setLoading(true)
     setError('')
     try {
-      const res = await axios.post('https://one-media-back-end.vercel.app/api/auth/register', form, { withCredentials: true })
+      const res = await axios.post('http://localhost:3000/api/auth/register', form, { withCredentials: true })
       toast.success('Signup successful!')
       navigate('/')
     } catch (err) {

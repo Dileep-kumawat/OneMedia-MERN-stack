@@ -24,7 +24,7 @@ const Login = () => {
     setError('')
     try {
       // Replace with your login endpoint
-      const res = await axios.post('https://one-media-back-end.vercel.app/api/auth/login', form, { withCredentials: true })
+      const res = await axios.post('http://localhost:3000/api/auth/login', form, { withCredentials: true })
       if(res.data.success){
         login(res.data.user);
         toast.success('Login successful!')

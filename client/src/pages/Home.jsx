@@ -122,7 +122,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    axios.get('https://one-media-back-end.vercel.app/api/auth/profile', { withCredentials: true })
+    axios.get('http://localhost:3000/api/auth/profile', { withCredentials: true })
       .then(res => {
         setUser(res.data.user);
         setLoading(false);

@@ -10,7 +10,7 @@ const VideoUploader = () => {
     const formData = new FormData();
     formData.append('video', file);
 
-    const res = await axios.post('https://one-media-back-end.vercel.app/api/upload/video', formData, {
+    const res = await axios.post('http://localhost:3000/api/upload/video', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 

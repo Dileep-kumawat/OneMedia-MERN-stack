@@ -9,7 +9,7 @@ const videoUploadRoute = require('./routes/upload');
 const port = 3000
 
 app.use(cors({
-    origin: 'https://onemedia-dileep.netlify.app',
+    origin: 'http://localhost:5173',
     credentials: true
 }));
 
