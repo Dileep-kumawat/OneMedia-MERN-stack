@@ -7,6 +7,8 @@ import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/Auth.context.jsx';
 import ProtectedRoute from './components/Protected.Route.jsx';
 import PublicRoute from './components/Public.Route.jsx';
+import { store } from './Store/store'
+import { Provider } from 'react-redux'
 
 const router = createBrowserRouter([
     {
@@ -39,8 +41,10 @@ const App = () => {
     return (
         <>
             <AuthProvider>
-                <Toaster position="top-center" />
-                <RouterProvider router={router} />
+                <Provider store={store}>
+                    <Toaster position="top-center" />
+                    <RouterProvider router={router} />
+                </Provider>
             </AuthProvider>
         </>
     )

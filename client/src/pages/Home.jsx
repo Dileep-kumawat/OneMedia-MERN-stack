@@ -212,8 +212,8 @@ const Home = () => {
   return (
     <>
       <div className='w-full h-screen overflow-hidden dark:bg-slate-950 dark:text-white flex '>
-        
-        <Sidebar /> 
+
+        <Sidebar />
 
         <main className='grid md:grid-cols-3 grid-cols-2 w-full'>
 

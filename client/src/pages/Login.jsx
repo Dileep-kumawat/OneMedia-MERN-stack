@@ -23,7 +23,6 @@ const Login = () => {
     setLoading(true)
     setError('')
     try {
-      // Replace with your login endpoint
       const res = await axios.post('http://localhost:3000/api/auth/login', form, { withCredentials: true })
       if(res.data.success){
         login(res.data.user);
