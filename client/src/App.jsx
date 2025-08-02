@@ -9,6 +9,7 @@ import ProtectedRoute from './components/Protected.Route.jsx';
 import PublicRoute from './components/Public.Route.jsx';
 import { store } from './Store/store'
 import { Provider } from 'react-redux'
+import Messages from './pages/Messages.jsx'
 
 const router = createBrowserRouter([
     {
@@ -33,6 +34,13 @@ const router = createBrowserRouter([
             <PublicRoute>
                 <Signup />
             </PublicRoute>
+        )
+    },{
+        path: "/messages",
+        element: (
+            <ProtectedRoute>
+                <Messages />
+            </ProtectedRoute>
         )
     }
 ]);

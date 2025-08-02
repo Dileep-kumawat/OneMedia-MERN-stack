@@ -39,7 +39,7 @@ const Sidebar = () => {
                         <TfiVideoClapper className='text-xl' />
                         <li>Reels</li>
                     </Link>
-                    <Link to='' className='sidenavLinks'>
+                    <Link to='/messages' className='sidenavLinks'>
                         <TiMessages className='text-2xl' />
                         <li>Messages</li>
                     </Link>
