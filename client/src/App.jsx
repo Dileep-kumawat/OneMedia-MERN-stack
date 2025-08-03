@@ -10,6 +10,7 @@ import PublicRoute from './components/Public.Route.jsx';
 import { store } from './Store/store'
 import { Provider } from 'react-redux'
 import Messages from './pages/Messages.jsx'
+import { SocketProvider } from './context/Socket.context.jsx';
 
 const router = createBrowserRouter([
     {
@@ -50,8 +51,10 @@ const App = () => {
         <>
             <AuthProvider>
                 <Provider store={store}>
-                    <Toaster position="top-center" />
-                    <RouterProvider router={router} />
+                    <SocketProvider>
+                        <Toaster position="top-center" />
+                        <RouterProvider router={router} />
+                    </SocketProvider>
                 </Provider>
             </AuthProvider>
         </>

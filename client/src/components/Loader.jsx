@@ -9,7 +9,7 @@ const Loader = ({ width }) => {
         6: "w-6",
         7: "w-7",
         10: "w-10",
-    }[width] || "w-5"; // default fallback
+    }[width] || "w-5"; 
 
     return <div className={`${widthClass} loader`}></div>;
 };

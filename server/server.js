@@ -1,15 +1,17 @@
-require('dotenv').config();
+import 'dotenv/config.js'; 
 
-const express = require('express');
+import http from 'http';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
+import { initSocket } from './socket.js';
+import connectDB from './utils/db.js';
+import authRouter from './routes/auth.route.js';
+import messageRouter from './routes/message.route.js';
+
 const app = express();
-
-const cors = require('cors');
-const connectDB = require('./utils/db');
-const cookieParser = require('cookie-parser');
-
-const authRouter = require('./routes/auth.route');
-
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -17,11 +19,15 @@ app.use(cors({
 }));
 
 connectDB();
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
+app.use("/api/messages", messageRouter);
 
-app.listen(port, () => {
-    console.log(`Example app listening on port http://localhost:${port}`)
-})
+const server = http.createServer(app);
+initSocket(server);
+
+server.listen(port, () => {
+    console.log(`Example app listening on port http://localhost:${port}`);
+});
