@@ -49,3 +49,21 @@
   scrollbar-color: #444 #1e1e1e;
   /* thumb and track */
 }
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border: 2px solid #f0f0f0;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Firefox - Light theme */
+html:not(.dark) * {
+  scrollbar-color: #bbb #f0f0f0;
+}

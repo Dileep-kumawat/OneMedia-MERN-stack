@@ -18,7 +18,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
 
 
     return (
-        <div className={'w-screen sm:w-1/4 bg-slate-900 space-y-3 fixed sm:static top-0 -left-full sm:left-0' + (sidebar ? ' left-0' : '')}>
+        <div className={'w-screen sm:w-1/3 dark:bg-slate-900 space-y-3 fixed sm:static top-0 -left-full sm:left-0' + (sidebar ? ' left-0' : '')}>
             <div className='flex flex-col h-screen'>
                 <div className={'flex sm:justify-between items-center sm:px-10 p-4 h-20' + (sidebar ? ' justify-around' : ' justify-center')}>
                     <Link to="/"><IoMdHome className='text-4xl cursor-pointer' /></Link>
@@ -27,7 +27,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                         setSidebar(!sidebar)
                     }} />
                 </div>
-                <div className='flex bg-slate-800 items-center gap-5 mx-5 rounded-2xl h-15 hover:outline'>
+                <div className='flex bg-gray-100 dark:bg-slate-800 items-center gap-5 mx-5 rounded-2xl h-15 hover:outline'>
                     <input type="text" className='w-[80%] outline-none px-5' placeholder='Search...' />
                     <IoSearch className={'text-2xl md:translate-x-0' + (sidebar ? '' : ' -translate-x-2')} />
                 </div>
@@ -36,7 +36,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                         <User sidebar={sidebar} setSidebar={setSidebar} />
                     ))}
                 </div>
-                <div className='px-4 py-1 flex items-center gap-3'>
+                <div className='px-4 py-1 flex items-center gap-3 border-t border-t-gray-500'>
                     <img src="https://img.freepik.com/premium-vector/avatar-profile-icon-flat-style-female-user-profile-vector-illustration-isolated-background-women-profile-sign-business-concept_157943-38866.jpg" alt="profile" className='size-11 rounded-full overflow-hidden flex-shrink-0' />
                     <div className={'lg:block' + (sidebar ? '' : ' hidden')} >
                         <h1>Full name</h1>
@@ -45,7 +45,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                     <button onClick={() => {
                         logout();
                         navigate('/login');
-                    }} className={'bg-red-600 sm:block text-white font-bold py-2 px-5 rounded-2xl hover:bg-red-500 cursor-pointer text-md active:scale-[0.95] ml-auto' + (sidebar ? '' : ' hidden')}>Log out</button>
+                    }} className={'bg-red-600 sm:block text-white text-sm font-bold py-2 px-5 rounded-2xl hover:bg-red-500 cursor-pointer text-md active:scale-[0.95] ml-auto' + (sidebar ? '' : ' hidden')}>Log out</button>
                 </div>
             </div>
         </div>
