@@ -31,7 +31,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
                     <input type="text" className='w-[80%] outline-none px-5' placeholder='Search...' />
                     <IoSearch className={'text-2xl md:translate-x-0' + (sidebar ? '' : ' -translate-x-2')} />
                 </div>
-                <div className='h-[80%] overflow-y-auto px-4'>
+                <div className='h-[80%] overflow-y-auto px-4 custom-scrollbar'>
                     {user.map(() => (
                         <User sidebar={sidebar} setSidebar={setSidebar} />
                     ))}

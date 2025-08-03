@@ -217,7 +217,7 @@ const Home = () => {
 
         <main className='grid md:grid-cols-3 grid-cols-2 w-full'>
 
-          <div className='col-span-2 w-full sm:p-15 p-5 space-y-15 overflow-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+          <div className='col-span-2 w-full sm:p-15 p-5 space-y-15 overflow-auto custom-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
             {reelSection}
           </div>
 
