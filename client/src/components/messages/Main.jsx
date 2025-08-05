@@ -13,17 +13,25 @@ const Main = ({ sidebar, setSidebar, user, selectedUser, chatMode }) => {
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
     const { socket } = useSocket();
+    const typingTimeoutRef = useRef(null);
 
     useEffect(() => {
+        if (!socket || !user) return;
+
         if (socket && user) {
             const handleMessage = (data) => {
-                setMessages((prev) => [...prev, {
-                    senderId: data.senderId,
-                    senderName: data.senderName,
-                    senderAvatar: data.senderAvatar,
-                    message: data.message,
-                    timestamp: data.timestamp
-                }]);
+                const isRelevant = chatMode === 'individual' &&
+                    (data.senderId === selectedUser?._id || data.senderId === user._id);
+
+                if (isRelevant) {
+                    setMessages((prev) => [...prev, {
+                        senderId: data.senderId,
+                        senderName: data.senderName,
+                        senderAvatar: data.senderAvatar,
+                        message: data.message,
+                        timestamp: data.timestamp
+                    }]);
+                }
             };
 
             const handleGroupMessage = (data) => {
@@ -52,7 +60,7 @@ const Main = ({ sidebar, setSidebar, user, selectedUser, chatMode }) => {
                 socket.off('userTyping', handleTyping);
             };
         }
-    }, [socket, user, chatMode]);
+    }, [socket, user?._id, chatMode, selectedUser?._id]);
 
     useEffect(() => {
         loadMessages();
@@ -141,12 +149,20 @@ const Main = ({ sidebar, setSidebar, user, selectedUser, chatMode }) => {
 
     const handleInputChange = (e) => {
         setNewMessage(e.target.value);
-        
+
         if (socket && selectedUser && chatMode === 'individual') {
+            clearTimeout(typingTimeoutRef.current);
             socket.emit('typing', {
                 receiverId: selectedUser._id,
-                isTyping: e.target.value.length > 0
+                isTyping: true
             });
+
+            typingTimeoutRef.current = setTimeout(() => {
+                socket.emit('typing', {
+                    receiverId: selectedUser._id,
+                    isTyping: false
+                });
+            }, 1000);
         }
     };
 
@@ -191,12 +207,12 @@ const Main = ({ sidebar, setSidebar, user, selectedUser, chatMode }) => {
                 }} className='block sm:hidden text-2xl cursor-pointer' />
                 {getChatTitle()}
             </div>
-            
+
             <div className='h-full overflow-y-auto flex flex-col gap-3 p-3 custom-scrollbar'>
                 {messages.length === 0 ? (
                     <div className="flex items-center justify-center h-full text-gray-500">
-                        {chatMode === 'group' ? 'No group messages yet' : 
-                         selectedUser ? 'No messages yet' : 'Select a user to start chatting'}
+                        {chatMode === 'group' ? 'No group messages yet' :
+                            selectedUser ? 'No messages yet' : 'Select a user to start chatting'}
                     </div>
                 ) : (
                     messages.map((msg, index) => (
@@ -225,7 +241,7 @@ const Main = ({ sidebar, setSidebar, user, selectedUser, chatMode }) => {
                 )}
                 <div ref={messagesEndRef} />
             </div>
-            
+
             <div className='h-15 bg-gray-400/30 dark:bg-slate-900/50 flex gap-3 items-center p-3'>
                 <input
                     type="text"

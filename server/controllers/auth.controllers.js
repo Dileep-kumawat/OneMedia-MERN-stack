@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select('username fullname email');
+    const user = await User.findById(req.user._id).select('username fullname email avatar gender');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json({ user });
   } catch (err) {

@@ -81,7 +81,7 @@ const Sidebar = ({ sidebar, setSidebar, user, onUserSelect, onChatModeChange, se
                 <div className='flex mx-5 mb-3 bg-gray-100 dark:bg-slate-800 rounded-2xl p-1'>
                     <button
                         onClick={handleGroupChatSelect}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl transition-colors ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl cursor-pointer transition-colors ${
                             chatMode === 'group' 
                                 ? 'bg-blue-500 text-white' 
                                 : 'hover:bg-gray-200 dark:hover:bg-slate-700'
@@ -92,7 +92,7 @@ const Sidebar = ({ sidebar, setSidebar, user, onUserSelect, onChatModeChange, se
                     </button>
                     <button
                         onClick={() => onChatModeChange('individual')}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl transition-colors ${
+                        className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl cursor-pointer transition-colors ${
                             chatMode === 'individual' 
                                 ? 'bg-blue-500 text-white' 
                                 : 'hover:bg-gray-200 dark:hover:bg-slate-700'
@@ -118,7 +118,7 @@ const Sidebar = ({ sidebar, setSidebar, user, onUserSelect, onChatModeChange, se
                 )}
 
                 {/* Users List */}
-                <div className='flex-1 overflow-y-auto px-4 custom-scrollbar'>
+                <div className='flex-1 overflow-y-auto px-4 mt-2 custom-scrollbar'>
                     {chatMode === 'group' ? (
                         <div className='p-4 text-center text-gray-500'>
                             <MdGroup className="text-6xl mx-auto mb-4 text-blue-500" />

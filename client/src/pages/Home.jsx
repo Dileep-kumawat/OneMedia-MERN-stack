@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Loader from '../components/Loader';
 import axios from 'axios';
+
+import Loader from '../components/Loader';
 import Sidebar from '../utils/Sidebar';
 
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegComment } from "react-icons/fa";
-import { HiOutlineSpeakerWave } from "react-icons/hi2";
-import { HiOutlineSpeakerXMark } from "react-icons/hi2";
+import { FaRegHeart, FaRegComment } from "react-icons/fa";
+import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
 
 import DefaultProfile from '../assets/DefaultProfile.png';
 import Demo1 from '../assets/demo1.jpg'
@@ -100,7 +99,6 @@ const footerTags = [
   "Meta Verified"
 ]
 
-
 const Home = () => {
 
   const [loading, setLoading] = useState(true);
@@ -117,6 +115,7 @@ const Home = () => {
     axios.get('http://localhost:3000/api/auth/profile', { withCredentials: true })
       .then(res => {
         setUser(res.data.user);
+        console.log(user);
         setLoading(false);
       })
       .catch(() => {
@@ -171,7 +170,7 @@ const Home = () => {
               <div
                 className='absolute bottom-5 right-5 p-2 rounded-full bg-black/50 text-white cursor-pointer'
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering video click
+                  e.stopPropagation(); 
                   const updatedStates = [...mutedStates];
                   updatedStates[valIndex] = !updatedStates[valIndex];
                   setMutedStates(updatedStates);
@@ -213,7 +212,7 @@ const Home = () => {
     <>
       <div className='w-full h-screen overflow-hidden dark:bg-slate-950 dark:text-white flex '>
 
-        <Sidebar />
+        <Sidebar user={user}/>
 
         <main className='grid md:grid-cols-3 grid-cols-2 w-full'>
 
@@ -223,7 +222,7 @@ const Home = () => {
 
           <div className='w-full hidden md:block p-10 space-y-10'>
             <div className="card flex gap-5 items-center lg:min-w-1/2 min:w-full">
-              <img src={DefaultProfile} alt="" className='rounded-full size-11' />
+              <img src={user.avatar} alt="" className='rounded-full size-11' />
               <div className="">
                 <h1 className='font-bold'>{user?.fullname || 'Profile name'}</h1>
                 <p className='text-gray-500'>{user?.email || 'Email'}</p>

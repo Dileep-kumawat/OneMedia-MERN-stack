@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import Home from "./pages/Home.jsx"
 import Login from "./pages/Login.jsx"
 import Signup from "./pages/Signup.jsx"
+import Messages from './pages/Messages.jsx'
 import ErrorHandler from "./pages/ErrorHandler.jsx"
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/Auth.context.jsx';
@@ -9,7 +10,6 @@ import ProtectedRoute from './components/Protected.Route.jsx';
 import PublicRoute from './components/Public.Route.jsx';
 import { store } from './Store/store'
 import { Provider } from 'react-redux'
-import Messages from './pages/Messages.jsx'
 import { SocketProvider } from './context/Socket.context.jsx';
 
 const router = createBrowserRouter([
@@ -36,13 +36,16 @@ const router = createBrowserRouter([
                 <Signup />
             </PublicRoute>
         )
-    },{
+    }, {
         path: "/messages",
         element: (
             <ProtectedRoute>
                 <Messages />
             </ProtectedRoute>
         )
+    }, {
+        path: "*",
+        element: <ErrorHandler />
     }
 ]);
 

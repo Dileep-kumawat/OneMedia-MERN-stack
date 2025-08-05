@@ -25,7 +25,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const userCookie = getCookie('user');
-    if (userCookie) setUser(JSON.parse(decodeURIComponent(userCookie)));
+    if (userCookie) {
+      try {
+        setUser(JSON.parse(decodeURIComponent(userCookie)));
+      } catch (err) {
+        console.error("Failed to parse user cookie", err);
+        deleteCookie('user'); // remove corrupted cookie
+      }
+    }
   }, []);
 
   const login = (userData) => {

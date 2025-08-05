@@ -6,14 +6,12 @@ import { TiMessages } from "react-icons/ti";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegPlusSquare } from "react-icons/fa";
 
-import DefaultProfile from '../assets/DefaultProfile.png';
-
 import { Link } from 'react-router';
 import { useAuth } from '../context/Auth.context';
 
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = ({ user }) => {
 
     const navigate = useNavigate();
 
@@ -52,7 +50,7 @@ const Sidebar = () => {
                         <li>create</li>
                     </Link>
                     <Link to='' className='sidenavLinks'>
-                        <img src={DefaultProfile} className='w-8 rounded-full ' alt="" />
+                        <img src={user.avatar} className='w-8 rounded-full ' alt="" />
                         <li>Profile</li>
                     </Link>
                 </ul>
