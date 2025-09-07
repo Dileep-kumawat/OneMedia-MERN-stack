@@ -1,4 +1,3 @@
-````markdown
 # 🌍 One Media – Social Media Concept (Unfinished Project)
 
 ![Thumbnail](./thumbnail.png)  
