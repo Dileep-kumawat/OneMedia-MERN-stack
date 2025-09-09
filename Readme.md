@@ -1,6 +1,6 @@
 # 🌍 One Media – Social Media Concept (Unfinished Project)
 
-![Thumbnail](./thumbnail.png)  
+![Thumbnail](./Thumbnail.png)  
 
 **One Media** is an experimental social media web app that brings together the **best features of all major platforms** into a single place.  
 Although this project is currently incomplete, it represents an important step in my journey of learning the **MERN Stack** and **Tailwind CSS**.
